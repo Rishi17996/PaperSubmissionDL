@@ -6,7 +6,7 @@ public class User {
 	private String lastName;
 	private String firstName;
 	private String email;
-	private String password;
+	private String pswd;
 	private String expiration;
 	private int isAdmin;
 	private int affiliationId;
@@ -29,10 +29,6 @@ public class User {
 	
 	public void resetPassword(String email) {
 		
-	}
-	
-	public void setPassword(String password) {
-
 	}
 	
 	public void login(String email, String password) {
@@ -72,7 +68,11 @@ public class User {
 	}
 	
 	public String getPassword() {
-		return password;
+		return pswd;
+	}
+	
+	public void setPassword(String pswd) {
+		this.pswd = pswd;
 	}
 
 	public String getExpiration() {
