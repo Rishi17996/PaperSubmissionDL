@@ -1,4 +1,4 @@
-package com.csm;
+package com.csm.main;
 
 public class Main {
 	
