@@ -2,6 +2,8 @@ package com.csm.dao;
 
 import java.util.ArrayList;
 
+import com.csm.database.MySQLDatabase;
+
 public class Paper {
 	
 	private int paperId;
@@ -13,9 +15,10 @@ public class Paper {
 	private int submitterId;
 	private String field;
 	private String tentativeStatus;
+	private MySQLDatabase db;
 	
 	public Paper() {
-		
+		db = new MySQLDatabase();
 	}
 	
 	public ArrayList<Paper> getPapers(int userId) {
@@ -109,5 +112,13 @@ public class Paper {
 
 	public void setTentativeStatus(String tentativeStatus) {
 		this.tentativeStatus = tentativeStatus;
+	}
+
+	public MySQLDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(MySQLDatabase db) {
+		this.db = db;
 	}
 }

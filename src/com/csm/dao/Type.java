@@ -1,12 +1,15 @@
 package com.csm.dao;
 
+import com.csm.database.MySQLDatabase;
+
 public class Type {
 
 	private int typeId;
 	private String typeName;
+	private MySQLDatabase db;
 	
 	public Type() {
-		
+		db = new MySQLDatabase();
 	}
 
 	public int getTypeId() {
@@ -23,5 +26,13 @@ public class Type {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	public MySQLDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(MySQLDatabase db) {
+		this.db = db;
 	}
 }

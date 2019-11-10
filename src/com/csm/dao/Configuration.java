@@ -2,6 +2,8 @@ package com.csm.dao;
 
 import java.sql.Date;
 
+import com.csm.database.MySQLDatabase;
+
 public class Configuration {
 	
 	private Date submissionOpen;
@@ -24,10 +26,11 @@ public class Configuration {
 	private String registrationURL;
 	private String authorRegistrationClose;
 	private String conferenceDates;
+	private MySQLDatabase db;
 	
 	
 	public Configuration() {
-		
+		db = new MySQLDatabase();
 	}
 
 
@@ -228,5 +231,15 @@ public class Configuration {
 
 	public void setConferenceDates(String conferenceDates) {
 		this.conferenceDates = conferenceDates;
+	}
+
+
+	public MySQLDatabase getDb() {
+		return db;
+	}
+
+
+	public void setDb(MySQLDatabase db) {
+		this.db = db;
 	}
 }

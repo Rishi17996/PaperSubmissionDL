@@ -1,5 +1,7 @@
 package com.csm.dao;
 
+import com.csm.database.MySQLDatabase;
+
 public class User {
 	
 	private int userId;
@@ -10,9 +12,10 @@ public class User {
 	private String expiration;
 	private int isAdmin;
 	private int affiliationId;
+	private MySQLDatabase db;
 
 	public User() {
-		
+		db = new MySQLDatabase();
 	}
 	
 	public String[] getProfile() {
@@ -97,5 +100,13 @@ public class User {
 
 	public void setAffiliationId(int affiliationId) {
 		this.affiliationId = affiliationId;
+	}
+
+	public MySQLDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(MySQLDatabase db) {
+		this.db = db;
 	}
 }

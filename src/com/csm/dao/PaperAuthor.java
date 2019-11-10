@@ -1,13 +1,16 @@
 package com.csm.dao;
 
+import com.csm.database.MySQLDatabase;
+
 public class PaperAuthor {
 	
 	private int paperId;
 	private int userId;
 	private int displayOrder;
+	private MySQLDatabase db;
 	
 	public PaperAuthor() {
-		
+		db = new MySQLDatabase();
 	}
 
 	public int getPaperId() {
@@ -32,5 +35,13 @@ public class PaperAuthor {
 
 	public void setDisplayOrder(int displayOrder) {
 		this.displayOrder = displayOrder;
+	}
+
+	public MySQLDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(MySQLDatabase db) {
+		this.db = db;
 	}
 }

@@ -1,6 +1,6 @@
 package com.csm.dao;
 
-import com.main.MySQLDatabase;
+import com.csm.database.MySQLDatabase;
 
 public class Affiliation {
 	
@@ -9,7 +9,7 @@ public class Affiliation {
 	private MySQLDatabase db;
 	
 	public Affiliation() {
-		
+		db = new MySQLDatabase();
 	}
 
 	public int getAffiliationId() {
@@ -26,5 +26,13 @@ public class Affiliation {
 
 	public void setAffiliationName(String affiliationName) {
 		this.affiliationName = affiliationName;
+	}
+
+	public MySQLDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(MySQLDatabase db) {
+		this.db = db;
 	}
 }
