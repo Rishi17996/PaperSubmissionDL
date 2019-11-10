@@ -2,7 +2,7 @@ package com.csm.dao;
 
 import com.csm.database.MySQLDatabase;
 
-public class PaperSubject {
+public class PaperSubject extends Subject {
 
 	private int paperId;
 	private int subjectId;

@@ -16,6 +16,8 @@ public class Paper {
 	private String field;
 	private String tentativeStatus;
 	private MySQLDatabase db;
+	private PaperSubject paperSubject;
+	private Type type;
 	
 	public Paper() {
 		db = new MySQLDatabase();
@@ -120,5 +122,21 @@ public class Paper {
 
 	public void setDb(MySQLDatabase db) {
 		this.db = db;
+	}
+
+	public PaperSubject getPaperSubject() {
+		return paperSubject;
+	}
+
+	public void setPaperSubject(PaperSubject paperSubject) {
+		this.paperSubject = paperSubject;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 }

@@ -2,7 +2,7 @@ package com.csm.dao;
 
 import com.csm.database.MySQLDatabase;
 
-public class PaperAuthor {
+public class PaperAuthor extends User {
 	
 	private int paperId;
 	private int userId;
@@ -11,6 +11,10 @@ public class PaperAuthor {
 	
 	public PaperAuthor() {
 		db = new MySQLDatabase();
+	}
+	
+	public int submitPaper() {
+		return 0;
 	}
 
 	public int getPaperId() {

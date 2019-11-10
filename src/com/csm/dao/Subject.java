@@ -1,15 +1,12 @@
 package com.csm.dao;
 
-import com.csm.database.MySQLDatabase;
-
-public class Subject {
+public abstract class Subject {
 	
-	private int subjectId;
-	private String subjectName;
-	private MySQLDatabase db;
+	protected int subjectId;
+	protected String subjectName;
 	
 	public Subject() {
-		db = new MySQLDatabase();
+		
 	}
 
 	public int getSubjectId() {
@@ -26,13 +23,5 @@ public class Subject {
 
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
-	}
-
-	public MySQLDatabase getDb() {
-		return db;
-	}
-
-	public void setDb(MySQLDatabase db) {
-		this.db = db;
 	}
 }

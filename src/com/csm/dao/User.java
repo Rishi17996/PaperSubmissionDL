@@ -1,22 +1,22 @@
 package com.csm.dao;
 
-import com.csm.database.MySQLDatabase;
-
-public class User {
+public abstract class User {
 	
-	private int userId;
-	private String lastName;
-	private String firstName;
-	private String email;
-	private String pswd;
-	private String expiration;
-	private int isAdmin;
-	private int affiliationId;
-	private MySQLDatabase db;
+	protected int userId;
+	protected String lastName;
+	protected String firstName;
+	protected String email;
+	protected String pswd;
+	protected String expiration;
+	protected int isAdmin;
+	protected int affiliationId;
+	protected Paper paper;
 
 	public User() {
-		db = new MySQLDatabase();
+		
 	}
+	
+	public abstract int submitPaper();
 	
 	public String[] getProfile() {
 		String[] profile = new String[10];
@@ -102,11 +102,11 @@ public class User {
 		this.affiliationId = affiliationId;
 	}
 
-	public MySQLDatabase getDb() {
-		return db;
+	public Paper getPaper() {
+		return paper;
 	}
 
-	public void setDb(MySQLDatabase db) {
-		this.db = db;
+	public void setPaper(Paper paper) {
+		this.paper = paper;
 	}
 }
