@@ -1,5 +1,7 @@
 package com.csm.dao;
 
+import java.util.ArrayList;
+
 public abstract class User {
 	
 	protected int userId;
@@ -8,35 +10,49 @@ public abstract class User {
 	protected String email;
 	protected String pswd;
 	protected String expiration;
+	protected String canReview;
 	protected int isAdmin;
 	protected int affiliationId;
-	protected Paper paper;
+	protected ArrayList<Paper> paperList;
 
-	public User() {
+	public User(String lastName,
+			String firstName,
+			String email,
+			String pswd,
+			String expiration,
+			int isAdmin,
+			int affiliationId,
+			String canReview) {
 		
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.email = email;
+		this.pswd = pswd;
+		this.expiration = expiration;
+		this.isAdmin = isAdmin;
+		this.affiliationId = affiliationId;
+		this.canReview = canReview;
 	}
+	
+	public abstract int fetchNextUserId();
 	
 	public abstract int submitPaper();
 	
-	public String[] getProfile() {
-		String[] profile = new String[10];
-		return profile;
-	}
+	public abstract int post();
 	
-	public void setProfile(String lastName,
+	public abstract ArrayList<Paper> getPapers();
+	
+	public abstract String[] getProfile();
+	
+	public abstract void setProfile(String lastName,
 			String firstName,
 			String email,
 			String password,
-			String affiliation) {
-	}
+			String affiliation);
 	
-	public void resetPassword(String email) {
-		
-	}
+	public abstract void resetPassword(String email);
 	
-	public void login(String email, String password) {
-		
-	}
+	public abstract void login(String email, String password);
 
 	public int getUserId() {
 		return userId;
@@ -100,13 +116,5 @@ public abstract class User {
 
 	public void setAffiliationId(int affiliationId) {
 		this.affiliationId = affiliationId;
-	}
-
-	public Paper getPaper() {
-		return paper;
-	}
-
-	public void setPaper(Paper paper) {
-		this.paper = paper;
 	}
 }

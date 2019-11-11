@@ -3,6 +3,7 @@ package com.csm.dao;
 import java.util.ArrayList;
 
 import com.csm.database.MySQLDatabase;
+import com.csm.utility.Utilities;
 
 public class Paper {
 	
@@ -15,33 +16,46 @@ public class Paper {
 	private int submitterId;
 	private String field;
 	private String tentativeStatus;
-	private MySQLDatabase db;
 	private PaperSubject paperSubject;
-	private Type type;
+	private String submissionTitle;
+	private String submissionAbstract;
+	private Object fileName;
+	private MySQLDatabase db;
 	
-	public Paper() {
+	public Paper(String title,
+			String abstr,
+			String track,
+			String status,
+			int submissionType,
+			int submitterId,
+			String field,
+			String tentativeStatus,
+			PaperSubject paperSubject,
+			String submissionTitle,
+			String submissionAbstract,
+			String fileName) {
+		
+		// create new database instance
 		db = new MySQLDatabase();
+		
+		// set paper attributes
+		this.paperId = Utilities.generateId(1, 5000);
+		this.title = title;
+		this.abstr = abstr;
+		this.status = status;
+		this.submissionType = submissionType;
+		this.submitterId = submitterId;
+		this.field = field;
+		this.tentativeStatus = tentativeStatus;
+		this.paperSubject = paperSubject;
+		this.submissionTitle = submissionTitle;
+		this.submissionAbstract = submissionAbstract;
+		this.fileName = fileName;
 	}
 	
 	public ArrayList<Paper> getPapers(int userId) {
 		ArrayList<Paper> papers = new ArrayList<Paper>();
 		return papers;
-	}
-	
-	public Paper getPaper(int paperId) {
-		Paper paper = new Paper();
-		return paper;
-	}
-	
-	public void setPaper(int paperId, 
-			String submissionTitle, 
-			String submissionAbstract, 
-			int submissionType,
-			String filename,
-			String[] subjects,
-			String[] coauthorsfirstnames,
-			String[] coauthorslastnames) {
-		
 	}
 
 	public int getPaperId() {
@@ -132,11 +146,27 @@ public class Paper {
 		this.paperSubject = paperSubject;
 	}
 
-	public Type getType() {
-		return type;
+	public String getSubmissionTitle() {
+		return submissionTitle;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setSubmissionTitle(String submissionTitle) {
+		this.submissionTitle = submissionTitle;
+	}
+
+	public String getSubmissionAbstract() {
+		return submissionAbstract;
+	}
+
+	public void setSubmissionAbstract(String submissionAbstract) {
+		this.submissionAbstract = submissionAbstract;
+	}
+
+	public Object getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(Object fileName) {
+		this.fileName = fileName;
 	}
 }

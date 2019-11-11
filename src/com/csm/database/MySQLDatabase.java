@@ -17,7 +17,7 @@ public class MySQLDatabase {
 	public MySQLDatabase() {
 		url = "jdbc:mysql://localhost:3306/csm?useSSL=false";
 		username = "root";
-		password = "student";
+		password = "Gv3rn1ca";
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class MySQLDatabase {
 	 * @param numFields
 	 * @return objectlist
 	 */
-	public static ArrayList<ArrayList<Object>> getData(String sqlString, int numFields) {
+	public ArrayList<ArrayList<Object>> getData(String sqlString, int numFields) {
 
 		Statement stmnt = null;
 		ResultSet rs = null;
@@ -110,9 +110,7 @@ public class MySQLDatabase {
 	 * Fetch data from mysql database called from model class.
 	 *
 	 * @param sqlString
-	 *            the sql string
 	 * @param columns
-	 *            the columns
 	 * @return objectlist
 	 */
 	public ArrayList<ArrayList<Object>> getData(String sqlString, boolean columns) {
