@@ -17,7 +17,7 @@ public class MySQLDatabase {
 	public MySQLDatabase() {
 		url = "jdbc:mysql://localhost:3306/csm?useSSL=false";
 		username = "root";
-		password = "Gv3rn1ca";
+		password = "student";
 	}
 
 	/**
