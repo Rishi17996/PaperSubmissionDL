@@ -11,29 +11,23 @@ public class Main {
 	
 	public static void main (String[] args) {
 		
-		Date expirationDate = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(expirationDate);
-		cal.set(Calendar.MONTH, (cal.get(Calendar.MONTH) + 6));
-		expirationDate = cal.getTime();
-		
 		Affiliation affiliation = new Affiliation("School of Visual Arts");
 		
 		int affiliationId = affiliation.fetchNextAffiliationId();
+		int affSaved = affiliation.post();
+		System.out.println("affSaved: " + affSaved);
 		
-		User user = new PaperAuthor("LastName", 
-				"FirstName", 
-				"asdf@asdf.com", 
-				"password", 
-				expirationDate.toString(), 
-				0,
-				affiliationId,
-				"true");
-
-		System.out.println("userId: " + user.getUserId());
-		
+//		User user = new PaperAuthor("LastName",
+//				"FirstName", 
+//				"asdf@asdf.com", 
+//				"password", 
+//				"20250101000000", 
+//				0,
+//				133,
+//				"1");
+//		
+//		
 //		int userSaved = user.post();
-		
-//		System.out.println("User saved: " + userSaved);
+//		System.out.println("userSaved: " + userSaved);
 	}
 }

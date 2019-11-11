@@ -1,8 +1,9 @@
 package com.csm.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.csm.database.MySQLDatabase;
-import com.csm.utility.Utilities;
 
 public class Affiliation {
 	
@@ -15,8 +16,8 @@ public class Affiliation {
 		// instantiate new mysql
 		// database instance
 		db = new MySQLDatabase();
+		this.affiliationId = this.fetchNextAffiliationId();
 		this.affiliationName = affiliationName;
-		this.affiliationId = fetchNextAffiliationId();
 	}
 	
 	/**
@@ -48,11 +49,36 @@ public class Affiliation {
 		
 		return recordCount;
 	}
+	
+	/**
+	 * Post new record to database
+	 *
+	 * @return int
+	 */
+	public int post() {
 
-	public int generateId() {
-		Utilities.generateId(1, 5000);
-		return 0;
+		// create post query
+		String postQuery = "INSERT into `_affiliations` (affiliationName, affiliationId) VALUES (?, ?)";
+		
+		// create string list and set string values
+		List<String> stringList = new ArrayList<String>();
+		stringList.add(0, affiliationName);
+		stringList.add(1, String.valueOf(this.affiliationId));
+
+
+		// connect to database
+		db.connect();
+
+		// post data
+		int postDataResult = db.setData(postQuery, stringList);
+
+		// close database connection
+		db.close();
+		
+		// return records changed count
+		return postDataResult;
 	}
+
 	public int getAffiliationId() {
 		return affiliationId;
 	}

@@ -17,6 +17,7 @@ public class DLException extends Exception {
 		super(e);
 		try {
 			writeLog(e, values);
+			System.out.println("ERROR: " + e);
 		} catch (IOException e1) {
 			System.out.println("There was an error completing an operation.");
 		}

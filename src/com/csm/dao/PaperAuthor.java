@@ -23,7 +23,7 @@ public class PaperAuthor extends User {
 		// instantiate new mysql
 		// database instance
 		this.db = new MySQLDatabase();
-
+		
 		// set user attributes
 		this.userId = this.fetchNextUserId();
 		this.lastName = lastName;
@@ -54,8 +54,7 @@ public class PaperAuthor extends User {
 		// table format boolean and return
 		// equipment collection
 		String query = "SELECT MAX(userId) FROM users";
-
-		System.out.println("DB: " + db);
+		
 		// connect to database
 		db.connect();
 
@@ -67,9 +66,7 @@ public class PaperAuthor extends User {
 		
 		// convert and store incremented affiliationid
 		int recordCount = Integer.parseInt((String) tempList.get(0).get(0)) + 1;
-		
-//		System.out.println("RECORD COUNT: " + recordCount);
-		
+				
 		return recordCount;
 	}
 	
@@ -83,7 +80,7 @@ public class PaperAuthor extends User {
 
 		// create post query
 		String postQuery = "INSERT into `users` (userId, lastName, firstName, "
-				+ "email, pswd, expiration, isAdmin, affiliationId, canReview)"
+				+ "email, pswd, expiration, isAdmin, affiliationId, canReview) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		// create string list and set string values
@@ -97,6 +94,7 @@ public class PaperAuthor extends User {
 		stringList.add(6, String.valueOf(this.isAdmin));
 		stringList.add(7, String.valueOf(this.affiliationId));
 		stringList.add(8, this.canReview);
+
 
 		// connect to database
 		db.connect();

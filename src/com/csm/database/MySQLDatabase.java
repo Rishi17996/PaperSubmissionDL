@@ -17,7 +17,7 @@ public class MySQLDatabase {
 	public MySQLDatabase() {
 		url = "jdbc:mysql://localhost:3306/csm?useSSL=false";
 		username = "root";
-		password = "student";
+		password = "Gv3rn1ca";
 	}
 
 	/**
@@ -328,6 +328,8 @@ public class MySQLDatabase {
 			// execute prepared update
 			// and assign to rowcount
 			rowCount = preparedStmt.executeUpdate();
+
+			System.out.println("rowCount: " + rowCount);
 		} catch (SQLException e) {
 			try {
 				// throw dlexception and pass error info
