@@ -40,7 +40,7 @@ public class PaperAuthor extends User {
 	}
 	
 	/**
-	 * Fetch equipment arraylist
+	 * Fetch userid arraylist
 	 *
 	 * @return int
 	 */

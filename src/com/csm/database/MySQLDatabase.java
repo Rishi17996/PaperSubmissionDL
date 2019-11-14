@@ -328,8 +328,6 @@ public class MySQLDatabase {
 			// execute prepared update
 			// and assign to rowcount
 			rowCount = preparedStmt.executeUpdate();
-
-			System.out.println("rowCount: " + rowCount);
 		} catch (SQLException e) {
 			try {
 				// throw dlexception and pass error info

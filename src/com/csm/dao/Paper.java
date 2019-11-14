@@ -1,9 +1,9 @@
 package com.csm.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.csm.database.MySQLDatabase;
-import com.csm.utility.Utilities;
 
 public class Paper {
 	
@@ -14,12 +14,8 @@ public class Paper {
 	private String status;
 	private int submissionType;
 	private int submitterId;
-	private String field;
+	private String fileId;
 	private String tentativeStatus;
-	private PaperSubject paperSubject;
-	private String submissionTitle;
-	private String submissionAbstract;
-	private Object fileName;
 	private MySQLDatabase db;
 	
 	public Paper(String title,
@@ -28,33 +24,99 @@ public class Paper {
 			String status,
 			int submissionType,
 			int submitterId,
-			String field,
-			String tentativeStatus,
-			PaperSubject paperSubject,
-			String submissionTitle,
-			String submissionAbstract,
-			String fileName) {
+			String fileId,
+			String tentativeStatus) {
 		
 		// create new database instance
 		db = new MySQLDatabase();
 		
 		// set paper attributes
-		this.paperId = Utilities.generateId(1, 5000);
+		this.paperId = this.fetchNextPaperId();
 		this.title = title;
 		this.abstr = abstr;
+		this.track = track;
 		this.status = status;
 		this.submissionType = submissionType;
 		this.submitterId = submitterId;
-		this.field = field;
+		this.fileId = fileId;
 		this.tentativeStatus = tentativeStatus;
-		this.paperSubject = paperSubject;
-		this.submissionTitle = submissionTitle;
-		this.submissionAbstract = submissionAbstract;
-		this.fileName = fileName;
 	}
 	
-	public ArrayList<Paper> getPapers(int userId) {
+	public String generateRandomString() {
+		
+		return null;
+	}
+	/**
+	 * Fetch equipment arraylist
+	 *
+	 * @return int
+	 */
+	public int fetchNextPaperId() {
+
+		// query database for equipment by id
+		ArrayList<ArrayList<Object>> tempList = new ArrayList<ArrayList<Object>>();
+
+		// create and execute query passing in
+		// table format boolean and return
+		// equipment collection
+		String query = "SELECT MAX(paperId) FROM papers";
+		
+		// connect to database
+		db.connect();
+
+		// query database with get method
+		tempList = db.getData(query, 1);
+		
+		// close database connection
+		db.close();
+		
+		// convert and store incremented paperid
+		int recordCount = Integer.parseInt((String) tempList.get(0).get(0)) + 1;
+				
+		return recordCount;
+	}
+	
+	/**
+	 * Post new record to database
+	 *
+	 * @return int
+	 */
+	public int post() {
+
+		// create post query
+		String postQuery = "INSERT into `papers` (paperId, title, abstract, track, "
+				+ "status, submissionType, submitterId, fileId, tentativeStatus) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		// create string list and set string values
+		List<String> stringList = new ArrayList<String>();
+		stringList.add(0, String.valueOf(this.paperId));
+		stringList.add(1, this.title);
+		stringList.add(2, this.abstr);
+		stringList.add(3, this.track);
+		stringList.add(4, this.status);
+		stringList.add(5, String.valueOf(this.submissionType));
+		stringList.add(6, String.valueOf(this.submitterId));
+		stringList.add(7, this.fileId);
+		stringList.add(8, this.tentativeStatus);
+
+		// connect to database
+		db.connect();
+
+		// post data
+		int postDataResult = db.setData(postQuery, stringList);
+
+		// close database connection
+		db.close();
+		
+		// return records changed count
+		return postDataResult;
+	}
+	
+	public ArrayList<Paper> fetchPapers(int userId) {
 		ArrayList<Paper> papers = new ArrayList<Paper>();
+		
+		
 		return papers;
 	}
 
@@ -114,12 +176,12 @@ public class Paper {
 		this.submitterId = submitterId;
 	}
 
-	public String getField() {
-		return field;
+	public String getFileId() {
+		return fileId;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setField(String fileId) {
+		this.fileId = fileId;
 	}
 
 	public String getTentativeStatus() {
@@ -136,37 +198,5 @@ public class Paper {
 
 	public void setDb(MySQLDatabase db) {
 		this.db = db;
-	}
-
-	public PaperSubject getPaperSubject() {
-		return paperSubject;
-	}
-
-	public void setPaperSubject(PaperSubject paperSubject) {
-		this.paperSubject = paperSubject;
-	}
-
-	public String getSubmissionTitle() {
-		return submissionTitle;
-	}
-
-	public void setSubmissionTitle(String submissionTitle) {
-		this.submissionTitle = submissionTitle;
-	}
-
-	public String getSubmissionAbstract() {
-		return submissionAbstract;
-	}
-
-	public void setSubmissionAbstract(String submissionAbstract) {
-		this.submissionAbstract = submissionAbstract;
-	}
-
-	public Object getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(Object fileName) {
-		this.fileName = fileName;
 	}
 }
