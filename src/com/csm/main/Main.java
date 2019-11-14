@@ -42,7 +42,11 @@ public class Main {
 				Utilities.randomString(10),
 				"Accepted");
 		
-		int paperSaved = paper.post();
+		// post paper passing subject id
+		int paperSaved = paper.post(25);
 		System.out.println("paper saved: " + paperSaved);
+		
+		int paperAuthorSaved = user.postPaperAuthor(paper.getPaperId());
+		System.out.println("paper author saved: " + paperAuthorSaved);
 	}
 }

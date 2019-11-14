@@ -18,8 +18,7 @@ public class PaperAuthor extends User {
 			String expiration,
 			int isAdmin,
 			int affiliationId,
-			String canReview,
-			int paperId) {
+			String canReview) {
 		
 		super(lastName, firstName, email, pswd, expiration, isAdmin, affiliationId, canReview);
 		
@@ -29,7 +28,6 @@ public class PaperAuthor extends User {
 		
 		// set user attributes
 		this.userId = this.fetchNextUserId();
-		this.paperId = paperId;
 	}
 	
 	/**
@@ -122,6 +120,44 @@ public class PaperAuthor extends User {
 
 		// post data
 		int postDataResult = db.setData(postQuery, stringList);
+		
+		// close database connection
+		db.close();
+		
+		// return records changed count
+		return postDataResult;
+	}
+	
+	/**
+	 * Post new record to database
+	 *
+	 * @return int
+	 */
+	@Override
+	public int postPaperAuthor(int paperId) {
+
+		// disable/enable foreign key checks
+		String disableFKQuery = "SET FOREIGN_KEY_CHECKS=0;"; 
+		String enableFKQuery = "SET FOREIGN_KEY_CHECKS=1;";
+		
+		// create post query
+		String postQuery = "INSERT into `paperauthors` (userId, paperId) "
+				+ "VALUES (?, ?)";
+		
+		// create string list and set string values
+		List<String> stringList = new ArrayList<String>();
+		stringList.add(0, String.valueOf(paperId));
+		stringList.add(0, String.valueOf(this.userId));
+
+		// connect to database
+		db.connect();
+
+		db.setData(disableFKQuery, 1);
+
+		// post data
+		int postDataResult = db.setData(postQuery, stringList);
+		
+		db.setData(enableFKQuery, 1);
 		
 		// close database connection
 		db.close();
