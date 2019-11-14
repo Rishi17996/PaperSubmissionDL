@@ -8,6 +8,8 @@ import com.csm.database.MySQLDatabase;
 public class PaperAuthor extends User {
 	
 	private MySQLDatabase db;
+	private int paperId;
+	private int userId;
 	
 	public PaperAuthor(String lastName,
 			String firstName,
@@ -16,7 +18,8 @@ public class PaperAuthor extends User {
 			String expiration,
 			int isAdmin,
 			int affiliationId,
-			String canReview) {
+			String canReview,
+			int paperId) {
 		
 		super(lastName, firstName, email, pswd, expiration, isAdmin, affiliationId, canReview);
 		
@@ -26,17 +29,7 @@ public class PaperAuthor extends User {
 		
 		// set user attributes
 		this.userId = this.fetchNextUserId();
-		this.lastName = lastName;
-		this.firstName = firstName;
-		this.email = email;
-		this.pswd = pswd;
-		this.expiration = expiration;
-		this.isAdmin = isAdmin;
-		this.affiliationId = affiliationId;
-		this.canReview = canReview;
-		
-		// instantiate paperList
-		this.paperList = new ArrayList<Paper>();
+		this.paperId = paperId;
 	}
 	
 	/**
@@ -68,6 +61,34 @@ public class PaperAuthor extends User {
 		int recordCount = Integer.parseInt((String) tempList.get(0).get(0)) + 1;
 				
 		return recordCount;
+	}
+
+	/**
+	 * Post new record to database
+	 *
+	 * @return int
+	 */
+	public int postPaperSubject(int subjectId) {
+
+		// create post query
+		String postQuery = "INSERT into `papersubjects` (paperId, subjectId) VALUES (?, ?)";
+		
+		// create string list and set string values
+		List<String> stringList = new ArrayList<String>();
+		stringList.add(0, String.valueOf(this.paperId));
+		stringList.add(1, String.valueOf(subjectId));
+
+		// connect to database
+		db.connect();
+
+		// post data
+		int postDataResult = db.setData(postQuery, stringList);
+
+		// close database connection
+		db.close();
+		
+		// return records changed count
+		return postDataResult;
 	}
 	
 	/**
@@ -101,7 +122,7 @@ public class PaperAuthor extends User {
 
 		// post data
 		int postDataResult = db.setData(postQuery, stringList);
-
+		
 		// close database connection
 		db.close();
 		
@@ -137,5 +158,13 @@ public class PaperAuthor extends User {
 	@Override
 	public void login(String email, String password) {
 		
+	}
+
+	public int getPaperId() {
+		return paperId;
+	}
+
+	public void setPaperId(int paperId) {
+		this.paperId = paperId;
 	}
 }

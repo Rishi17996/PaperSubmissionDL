@@ -3,6 +3,7 @@ package com.csm.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csm.database.DLException;
 import com.csm.database.MySQLDatabase;
 
 public class Paper {
@@ -81,36 +82,68 @@ public class Paper {
 	 *
 	 * @return int
 	 */
-	public int post() {
+	public int post(int subjectId) {
 
 		// create post query
 		String postQuery = "INSERT into `papers` (paperId, title, abstract, track, "
 				+ "status, submissionType, submitterId, fileId, tentativeStatus) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		// create string list and set string values
-		List<String> stringList = new ArrayList<String>();
-		stringList.add(0, String.valueOf(this.paperId));
-		stringList.add(1, this.title);
-		stringList.add(2, this.abstr);
-		stringList.add(3, this.track);
-		stringList.add(4, this.status);
-		stringList.add(5, String.valueOf(this.submissionType));
-		stringList.add(6, String.valueOf(this.submitterId));
-		stringList.add(7, this.fileId);
-		stringList.add(8, this.tentativeStatus);
-
-		// connect to database
-		db.connect();
-
-		// post data
-		int postDataResult = db.setData(postQuery, stringList);
-
-		// close database connection
-		db.close();
+		// create paper string list and set string values
+		List<String> paperList = new ArrayList<String>();
+		paperList.add(0, String.valueOf(this.paperId));
+		paperList.add(1, this.title);
+		paperList.add(2, this.abstr);
+		paperList.add(3, this.track);
+		paperList.add(4, this.status);
+		paperList.add(5, String.valueOf(this.submissionType));
+		paperList.add(6, String.valueOf(this.submitterId));
+		paperList.add(7, this.fileId);
+		paperList.add(8, this.tentativeStatus);
 		
-		// return records changed count
-		return postDataResult;
+		// create subject post query
+		String subjectQuery = "INSERT into `papersubjects` (paperId, subjectId) "
+				+ "VALUES (?, ?)";
+		
+		// create string list and set string values
+		List<String> subjectList = new ArrayList<String>();
+		subjectList.add(0, String.valueOf(this.paperId));
+		subjectList.add(1, String.valueOf(subjectId));
+		
+		int postDataResult = 0;
+		int postSubjectResult = 0;
+
+		try {
+			// connect to database
+			db.connect();
+
+			// start transaction
+			db.startTrans();
+			
+			// post data
+			postDataResult = db.setData(postQuery, paperList);
+			postSubjectResult = db.setData(subjectQuery, subjectList);
+
+			// end transaction
+			db.endTrans();
+			
+			// close database connection
+			db.close();
+		} catch(Exception e) {
+			try {
+				// rollback transaction
+				db.rollbackTrans();
+				
+				// throw dlexception and pass error info
+				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
+				throw new DLException(e, errorInfo);
+			} catch (DLException e1) {
+				System.out.println("There was an error completing an operation.");
+			}
+		}
+		
+		// return records created count
+		return postDataResult + postSubjectResult;
 	}
 	
 	public ArrayList<Paper> fetchPapers(int userId) {

@@ -5,8 +5,9 @@ public abstract class Subject {
 	protected int subjectId;
 	protected String subjectName;
 	
-	public Subject() {
-		
+	public Subject(int subjectId, String subjectName) {
+		this.subjectId = subjectId;
+		this.subjectName = subjectName;
 	}
 
 	public int getSubjectId() {

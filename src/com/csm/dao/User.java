@@ -36,6 +36,8 @@ public abstract class User {
 	
 	public abstract int fetchNextUserId();
 	
+	public abstract int postPaperSubject(int subjectId);
+	
 	public abstract int submitPaper();
 	
 	public abstract int post();
