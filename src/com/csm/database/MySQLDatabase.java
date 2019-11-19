@@ -17,7 +17,7 @@ public class MySQLDatabase {
 	public MySQLDatabase() {
 		url = "jdbc:mysql://localhost:3306/csm?useSSL=false";
 		username = "root";
-		password = "Gv3rn1ca";
+		password = "student";
 	}
 
 	/**
@@ -32,9 +32,13 @@ public class MySQLDatabase {
 				// throw dlexception and pass error info
 				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
 				throw new DLException(e, errorInfo);
-			} catch (DLException e1) {
-				System.out.println("There was an error completing an operation.");
-			}
+			} 
+         catch(Exception ex) {
+            new DLException(ex);
+         }
+//          catch (DLException e1) {
+// 				System.out.println("There was an error completing an operation.");
+// 			}
 		}
 	}
 

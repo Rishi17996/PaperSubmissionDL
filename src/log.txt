@@ -1,0 +1,8 @@
+
+
+2019-11-19T12:24:18.771766600
+[Ljava.lang.StackTraceElement;@543788f3
+Access denied for user 'root'@'localhost' (using password: YES)
+Line: 19
+Class: com.csm.dao.Affiliation
+
