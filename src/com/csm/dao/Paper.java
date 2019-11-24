@@ -48,7 +48,8 @@ public class Paper {
 		return null;
 	}
 	/**
-	 * Fetch equipment arraylist
+	 * Fetch next available
+	 * equipment id
 	 *
 	 * @return int
 	 */
@@ -78,7 +79,7 @@ public class Paper {
 	}
 	
 	/**
-	 * Post new record to database
+	 * Post new paper to database
 	 *
 	 * @return int
 	 */
@@ -126,9 +127,6 @@ public class Paper {
 
 			// end transaction
 			db.endTrans();
-			
-			// close database connection
-			db.close();
 		} catch(Exception e) {
 			try {
 				// rollback transaction
@@ -140,6 +138,9 @@ public class Paper {
 			} catch (DLException e1) {
 				System.out.println("There was an error completing an operation.");
 			}
+		} finally {
+			// close database connection
+			db.close();
 		}
 		
 		// return records created count

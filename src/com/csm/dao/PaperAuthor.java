@@ -4,13 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.csm.database.MySQLDatabase;
+import com.csm.database.DLException;
 
 public class PaperAuthor extends User {
 	
 	private MySQLDatabase db;
 	private int paperId;
 	private int userId;
-	private String affiliationName;
+
+	public PaperAuthor() {
+		super();
+		
+		// instantiate new mysql
+		// database instance
+		this.db = new MySQLDatabase();
+	}
 	
 	public PaperAuthor(String lastName,
 			String firstName,
@@ -27,12 +35,12 @@ public class PaperAuthor extends User {
 		// database instance
 		this.db = new MySQLDatabase();
 		
-		// set user attributes
+		// set user id
 		this.userId = this.fetchNextUserId();
 	}
 	
 	/**
-	 * Fetch userid arraylist
+	 * Fetch userid int
 	 *
 	 * @return int
 	 */
@@ -91,7 +99,8 @@ public class PaperAuthor extends User {
 	}
 	
 	/**
-	 * Post new record to database
+	 * Post new user record 
+	 * to database
 	 *
 	 * @return int
 	 */
@@ -129,7 +138,8 @@ public class PaperAuthor extends User {
 	}
 	
 	/**
-	 * Post new record to database
+	 * Post new paperauthor 
+	 * record to database
 	 *
 	 * @return int
 	 */
@@ -148,19 +158,41 @@ public class PaperAuthor extends User {
 		List<String> stringList = new ArrayList<String>();
 		stringList.add(0, String.valueOf(paperId));
 		stringList.add(0, String.valueOf(this.userId));
-
-		// connect to database
-		db.connect();
-
-		db.setData(disableFKQuery, 1);
-
-		// post data
-		int postDataResult = db.setData(postQuery, stringList);
 		
-		db.setData(enableFKQuery, 1);
+		// result set count
+		int postDataResult = 0;
 		
-		// close database connection
-		db.close();
+		try {
+			// connect to database
+			db.connect();
+			
+			// start transaction
+			db.startTrans();
+
+			db.setData(disableFKQuery, 1);
+
+			// post data
+			postDataResult = db.setData(postQuery, stringList);
+			
+			db.setData(enableFKQuery, 1);
+			
+			// end transaction
+			db.endTrans();
+		} catch (Exception e) {
+			try {
+				// rollback transaction
+				db.rollbackTrans();
+				
+				// throw dlexception and pass error info
+				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
+				throw new DLException(e, errorInfo);
+			} catch (DLException e1) {
+				System.out.println("There was an error completing an operation.");
+			}
+		} finally {
+			// close database connection
+			db.close();
+		}
 		
 		// return records changed count
 		return postDataResult;
@@ -186,13 +218,15 @@ public class PaperAuthor extends User {
 			String firstName, 
 			String email, 
 			String password, 
-			String affiliationName) {
-		
+			int affiliationId) {
+
+		// set partial user profile
+		this.userId = this.fetchNextUserId();
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.email = email;
 		this.pswd = password;
-		this.affiliationName = affiliationName;
+		this.affiliationId = affiliationId;
 	}
 
 	@Override
@@ -211,13 +245,5 @@ public class PaperAuthor extends User {
 
 	public void setPaperId(int paperId) {
 		this.paperId = paperId;
-	}
-
-	public String getAffiliationName() {
-		return affiliationName;
-	}
-
-	public void setAffiliationName(String affiliationName) {
-		this.affiliationName = affiliationName;
 	}
 }

@@ -15,6 +15,11 @@ public abstract class User {
 	protected int affiliationId;
 	protected ArrayList<Paper> paperList;
 
+	// empty constructor
+	public User() {
+		
+	}
+
 	public User(String lastName,
 			String firstName,
 			String email,
@@ -52,7 +57,7 @@ public abstract class User {
 			String firstName,
 			String email,
 			String password,
-			String affiliation);
+			int affiliationId);
 	
 	public abstract void resetPassword(String email);
 	
