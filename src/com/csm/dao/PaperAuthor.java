@@ -115,7 +115,6 @@ public class PaperAuthor extends User {
 		stringList.add(7, String.valueOf(this.affiliationId));
 		stringList.add(8, this.canReview);
 
-
 		// connect to database
 		db.connect();
 
@@ -212,5 +211,13 @@ public class PaperAuthor extends User {
 
 	public void setPaperId(int paperId) {
 		this.paperId = paperId;
+	}
+
+	public String getAffiliationName() {
+		return affiliationName;
+	}
+
+	public void setAffiliationName(String affiliationName) {
+		this.affiliationName = affiliationName;
 	}
 }
