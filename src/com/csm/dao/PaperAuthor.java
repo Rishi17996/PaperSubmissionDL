@@ -10,6 +10,7 @@ public class PaperAuthor extends User {
 	private MySQLDatabase db;
 	private int paperId;
 	private int userId;
+	private String affiliationName;
 	
 	public PaperAuthor(String lastName,
 			String firstName,
@@ -114,7 +115,6 @@ public class PaperAuthor extends User {
 		stringList.add(7, String.valueOf(this.affiliationId));
 		stringList.add(8, this.canReview);
 
-
 		// connect to database
 		db.connect();
 
@@ -182,8 +182,17 @@ public class PaperAuthor extends User {
 	}
 
 	@Override
-	public void setProfile(String lastName, String firstName, String email, String password, String affiliation) {
+	public void setProfile(String lastName, 
+			String firstName, 
+			String email, 
+			String password, 
+			String affiliationName) {
 		
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.email = email;
+		this.pswd = password;
+		this.affiliationName = affiliationName;
 	}
 
 	@Override
@@ -202,5 +211,13 @@ public class PaperAuthor extends User {
 
 	public void setPaperId(int paperId) {
 		this.paperId = paperId;
+	}
+
+	public String getAffiliationName() {
+		return affiliationName;
+	}
+
+	public void setAffiliationName(String affiliationName) {
+		this.affiliationName = affiliationName;
 	}
 }
