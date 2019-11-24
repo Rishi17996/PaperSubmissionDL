@@ -18,11 +18,15 @@ public class Main {
 
 		System.out.println("affiliation saved: " + affSaved);
 		
+		// hash password
+		String userPassword = "password";
+        String securePassword = Utilities.getSHA1Password(userPassword);
+		
 		// new user generates next available id
 		User user = new PaperAuthor("LastName",
 				"FirstName", 
 				"asdf@asdf.com", 
-				"password", 
+				securePassword, 
 				"20250101000000", 
 				0,
 				affiliationId,
@@ -48,5 +52,21 @@ public class Main {
 		
 		int paperAuthorSaved = user.postPaperAuthor(paper.getPaperId());
 		System.out.println("paper author saved: " + paperAuthorSaved);
+		
+		
+		// hash profile password
+		String profilePassword = "password";
+        String secureProfilePassword = Utilities.getSHA1Password(profilePassword);
+        
+		// create partial user profile
+		User profileUser = new PaperAuthor();
+		profileUser.setProfile("Werner", "Edward", "asdf@asdf.com", secureProfilePassword, 273);
+		int profileSaved = profileUser.post();
+		System.out.println("profile saved: " + profileSaved);
+		
+		// test password encryption
+		String hashedPasswordTest = "hashedPassword";
+        String secureHashedPassword = Utilities.getSHA1Password(hashedPasswordTest);
+        System.out.println("hashed password: " + secureHashedPassword);
 	}
 }
