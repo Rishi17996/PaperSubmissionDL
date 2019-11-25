@@ -7,19 +7,19 @@ import com.csm.database.MySQLDatabase;
 import com.csm.database.DLException;
 
 public class PaperAuthor extends User {
-	
+
 	private MySQLDatabase db;
 	private int paperId;
 	private int userId;
 
 	public PaperAuthor() {
 		super();
-		
+
 		// instantiate new mysql
 		// database instance
 		this.db = new MySQLDatabase();
 	}
-	
+
 	public PaperAuthor(String lastName,
 			String firstName,
 			String email,
@@ -28,17 +28,17 @@ public class PaperAuthor extends User {
 			int isAdmin,
 			int affiliationId,
 			String canReview) {
-		
+
 		super(lastName, firstName, email, pswd, expiration, isAdmin, affiliationId, canReview);
-		
+
 		// instantiate new mysql
 		// database instance
 		this.db = new MySQLDatabase();
-		
+
 		// set user id
 		this.userId = this.fetchNextUserId();
 	}
-	
+
 	/**
 	 * Fetch userid int
 	 *
@@ -54,19 +54,19 @@ public class PaperAuthor extends User {
 		// table format boolean and return
 		// equipment collection
 		String query = "SELECT MAX(userId) FROM users";
-		
+
 		// connect to database
 		db.connect();
 
 		// query database with get method
 		tempList = db.getData(query, 1);
-		
+
 		// close database connection
 		db.close();
-		
+
 		// convert and store incremented affiliationid
 		int recordCount = Integer.parseInt((String) tempList.get(0).get(0)) + 1;
-				
+
 		return recordCount;
 	}
 
@@ -79,7 +79,7 @@ public class PaperAuthor extends User {
 
 		// create post query
 		String postQuery = "INSERT into `papersubjects` (paperId, subjectId) VALUES (?, ?)";
-		
+
 		// create string list and set string values
 		List<String> stringList = new ArrayList<String>();
 		stringList.add(0, String.valueOf(this.paperId));
@@ -93,13 +93,13 @@ public class PaperAuthor extends User {
 
 		// close database connection
 		db.close();
-		
+
 		// return records changed count
 		return postDataResult;
 	}
-	
+
 	/**
-	 * Post new user record 
+	 * Post new user record
 	 * to database
 	 *
 	 * @return int
@@ -111,7 +111,7 @@ public class PaperAuthor extends User {
 		String postQuery = "INSERT into `users` (userId, lastName, firstName, "
 				+ "email, pswd, expiration, isAdmin, affiliationId, canReview) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		
+
 		// create string list and set string values
 		List<String> stringList = new ArrayList<String>();
 		stringList.add(0, String.valueOf(this.userId));
@@ -129,16 +129,16 @@ public class PaperAuthor extends User {
 
 		// post data
 		int postDataResult = db.setData(postQuery, stringList);
-		
+
 		// close database connection
 		db.close();
-		
+
 		// return records changed count
 		return postDataResult;
 	}
-	
+
 	/**
-	 * Post new paperauthor 
+	 * Post new paperauthor
 	 * record to database
 	 *
 	 * @return int
@@ -147,25 +147,25 @@ public class PaperAuthor extends User {
 	public int postPaperAuthor(int paperId) {
 
 		// disable/enable foreign key checks
-		String disableFKQuery = "SET FOREIGN_KEY_CHECKS=0;"; 
+		String disableFKQuery = "SET FOREIGN_KEY_CHECKS=0;";
 		String enableFKQuery = "SET FOREIGN_KEY_CHECKS=1;";
-		
+
 		// create post query
 		String postQuery = "INSERT into `paperauthors` (userId, paperId) "
 				+ "VALUES (?, ?)";
-		
+
 		// create string list and set string values
 		List<String> stringList = new ArrayList<String>();
 		stringList.add(0, String.valueOf(paperId));
 		stringList.add(0, String.valueOf(this.userId));
-		
+
 		// result set count
 		int postDataResult = 0;
-		
+
 		try {
 			// connect to database
 			db.connect();
-			
+
 			// start transaction
 			db.startTrans();
 
@@ -173,16 +173,16 @@ public class PaperAuthor extends User {
 
 			// post data
 			postDataResult = db.setData(postQuery, stringList);
-			
+
 			db.setData(enableFKQuery, 1);
-			
+
 			// end transaction
 			db.endTrans();
 		} catch (Exception e) {
 			try {
 				// rollback transaction
 				db.rollbackTrans();
-				
+
 				// throw dlexception and pass error info
 				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
 				throw new DLException(e, errorInfo);
@@ -193,7 +193,7 @@ public class PaperAuthor extends User {
 			// close database connection
 			db.close();
 		}
-		
+
 		// return records changed count
 		return postDataResult;
 	}
@@ -210,14 +210,18 @@ public class PaperAuthor extends User {
 
 	@Override
 	public String[] getProfile() {
-		return null;
+		String[] userProfile = new String[3];
+		userProfile[0] = this.lastName;
+		userProfile[1] = this.firstName;
+		userProfile[2] = this.email;
+		return userProfile;
 	}
 
 	@Override
-	public void setProfile(String lastName, 
-			String firstName, 
-			String email, 
-			String password, 
+	public void setProfile(String lastName,
+			String firstName,
+			String email,
+			String password,
 			int affiliationId) {
 
 		// set partial user profile
@@ -231,12 +235,12 @@ public class PaperAuthor extends User {
 
 	@Override
 	public void resetPassword(String email) {
-		
+
 	}
 
 	@Override
 	public void login(String email, String password) {
-		
+
 	}
 
 	public int getPaperId() {
