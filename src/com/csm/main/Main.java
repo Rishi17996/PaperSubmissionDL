@@ -66,7 +66,15 @@ public class Main {
 		
 		// test password encryption
 		String hashedPasswordTest = "hashedPassword";
-        String secureHashedPassword = Utilities.getSHA1Password(hashedPasswordTest);
-        System.out.println("hashed password: " + secureHashedPassword);
+      String secureHashedPassword = Utilities.getSHA1Password(hashedPasswordTest);
+      System.out.println("hashed password: " + secureHashedPassword);
+        
+      // get paper with paperId = 21
+      System.out.println("getPaper: ");
+      paper.getPaper(21);
+      
+      // get papers for user 558
+      System.out.println("getPapers: ");
+      paper.getPapers(558);
 	}
 }

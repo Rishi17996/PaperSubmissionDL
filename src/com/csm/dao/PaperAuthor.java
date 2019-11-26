@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.csm.database.MySQLDatabase;
 import com.csm.database.DLException;
+import com.csm.utility.Utilities;
 
 public class PaperAuthor extends User {
 
@@ -239,9 +240,74 @@ public class PaperAuthor extends User {
 	}
 
 	@Override
-	public void login(String email, String password) {
+	public int login(String _email, String password) {
+		try {
+			 this.fetch(_email);
+			 // Pritesh
+			 // MessageDigest md = MessageDigest.getInstance("SHA-1");
+			 // String text = _password;
+			 // md.update(text.getBytes(StandardCharsets.UTF_8));
+			 // byte[] digest = md.digest();
+			 // String hashedPassword = String.format("%064x", new BigInteger(1, digest));
+			 Utilities u1 = new Utilities();
+			 String hashedPassword = u1.getSHA1Password(password);
 
+			 if(pswd.equals(hashedPassword) && email.equals(_email)) {
+				int token = isAdmin;
+					if(token == 1) {
+						return 1;
+					}
+					else
+					{
+						return 0;
+					}
+			 }
+			 else
+			 {
+					return -1;
+			 }
+		}
+		catch(Exception e) {
+			 try {
+					String msg = "NoSuchAlgorithmException in Users.login()";
+					throw new DLException(e, msg);
+			 }
+			 catch(DLException dl) {
+					e.printStackTrace();
+					return -1;
+			 }
+		}
 	}
+
+
+	// Fetch method
+   public void fetch(String _email) {
+      MySQLDatabase mysqld = new MySQLDatabase();
+      String sql = "SELECT userId, lastName, firstName, email, pswd, canReview, expiration, isAdmin, affiliationId FROM users WHERE email = ?;";
+			List<String> arg= new ArrayList<String>();
+			arg.add(_email);
+    	ArrayList<String> result = (ArrayList)mysqld.getData(sql, arg).get(0);
+      try {
+				this.userId = Integer.parseInt(result.get(0));
+				this.lastName = result.get(1);
+				this.firstName = result.get(2);
+				this.email = result.get(3);
+				this.pswd = result.get(4);
+				this.canReview = result.get(5);
+				this.expiration = result.get(6);
+				this.isAdmin = Integer.parseInt(result.get(7));
+				this.affiliationId = Integer.parseInt(result.get(8));
+      }
+      catch(IndexOutOfBoundsException ioobe) {
+         try {
+            String msg = "IndexOutOfBoundsException in Users.fetch()";
+            throw new DLException(ioobe, msg, "SQL - " + sql);
+         }
+         catch(DLException dl) {
+            ioobe.printStackTrace();
+         }
+      }
+   }
 
 	public int getPaperId() {
 		return paperId;
