@@ -1,0 +1,22 @@
+
+
+2019-11-25T20:03:54.631142300
+[Ljava.lang.StackTraceElement;@63daf2e1
+The driver was unable to create a connection due to an inability to establish the client portion of a socket.
+
+This is usually caused by a limit on the number of sockets imposed by the operating system. This limit is usually configurable. 
+
+For Unix-based platforms, see the manual page for the 'ulimit' command. Kernel or system reconfiguration may also be required.
+
+For Windows-based platforms, see Microsoft Knowledge Base Article 196271 (Q196271).
+Line: 168
+Class: com.csm.dao.Paper
+
+
+
+2019-11-25T20:03:54.662442700
+[Ljava.lang.StackTraceElement;@19ed6130
+No operations allowed after connection closed.
+Line: 168
+Class: com.csm.dao.Paper
+
