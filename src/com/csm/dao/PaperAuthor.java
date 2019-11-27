@@ -1,7 +1,6 @@
 package com.csm.dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import com.csm.database.MySQLDatabase;
 import com.csm.database.DLException;
@@ -111,7 +110,7 @@ public class PaperAuthor extends User {
 		// create post query
 		String postQuery = "INSERT into `users` (userId, lastName, firstName, "
 				+ "email, pswd, expiration, isAdmin, affiliationId, canReview) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?, ?, SHA1(?), ?, ?, ?, ?);";
 
 		// create string list and set string values
 		List<String> stringList = new ArrayList<String>();
@@ -241,52 +240,60 @@ public class PaperAuthor extends User {
 
 	@Override
 	public int login(String _email, String password) {
+      int returnValue = -1;
 		try {
-			 this.fetch(_email);
-			 // Pritesh
-			 // MessageDigest md = MessageDigest.getInstance("SHA-1");
-			 // String text = _password;
-			 // md.update(text.getBytes(StandardCharsets.UTF_8));
-			 // byte[] digest = md.digest();
-			 // String hashedPassword = String.format("%064x", new BigInteger(1, digest));
-			 Utilities u1 = new Utilities();
-			 String hashedPassword = u1.getSHA1Password(password);
-
-			 if(pswd.equals(hashedPassword) && email.equals(_email)) {
-				int token = isAdmin;
-					if(token == 1) {
-						return 1;
-					}
-					else
-					{
-						return 0;
-					}
-			 }
-			 else
-			 {
-					return -1;
-			 }
+         ArrayList<ArrayList<String>> tempList = new ArrayList<ArrayList<String>>();
+			this.fetch(_email);
+         
+         tempList = new ArrayList<ArrayList<String>>();
+         String query = "SELECT SHA1(?) FROM Users";
+         ArrayList<String> params = new ArrayList<String>();
+         params.add(password);
+         db.connect();
+         tempList = (ArrayList)db.getData(query, params);
+         db.close();
+          
+         String hashedPswd = tempList.get(0).get(0);
+			System.out.println("pswd = " + pswd);
+         System.out.println("hp = " + hashedPswd);
+         if(pswd.equals(hashedPswd)) {
+			   int token = this.isAdmin;
+			   if(token == 1) {
+               System.out.println("LA");
+			   	returnValue = 1;
+			   }
+			   else {
+               System.out.println("LU");
+			   	returnValue = 0;
+			   }
+			}
+			else {
+            System.out.println("U");
+			  	returnValue = -1;
+			}
 		}
 		catch(Exception e) {
-			 try {
-					String msg = "NoSuchAlgorithmException in Users.login()";
-					throw new DLException(e, msg);
-			 }
-			 catch(DLException dl) {
-					e.printStackTrace();
-					return -1;
-			 }
+			try {
+            returnValue = -1;
+				String msg = "NoSuchAlgorithmException in Users.login()";
+				new DLException(e, msg);
+			}
+			catch(Exception ex) {}
 		}
-	}
+      
+      return returnValue;
+   }
 
 
 	// Fetch method
    public void fetch(String _email) {
       MySQLDatabase mysqld = new MySQLDatabase();
       String sql = "SELECT userId, lastName, firstName, email, pswd, canReview, expiration, isAdmin, affiliationId FROM users WHERE email = ?;";
-			List<String> arg= new ArrayList<String>();
-			arg.add(_email);
+		List<String> arg= new ArrayList<String>();
+		arg.add(_email);
+      mysqld.connect();
     	ArrayList<String> result = (ArrayList)mysqld.getData(sql, arg).get(0);
+      mysqld.close();
       try {
 				this.userId = Integer.parseInt(result.get(0));
 				this.lastName = result.get(1);
@@ -301,11 +308,9 @@ public class PaperAuthor extends User {
       catch(IndexOutOfBoundsException ioobe) {
          try {
             String msg = "IndexOutOfBoundsException in Users.fetch()";
-            throw new DLException(ioobe, msg, "SQL - " + sql);
+            new DLException(ioobe, msg, "SQL - " + sql);
          }
-         catch(DLException dl) {
-            ioobe.printStackTrace();
-         }
+         catch(Exception ex) {}
       }
    }
 

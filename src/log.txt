@@ -20,3 +20,26 @@ No operations allowed after connection closed.
 Line: 168
 Class: com.csm.dao.Paper
 
+
+
+2019-11-27T08:28:43.882532700
+[Ljava.lang.StackTraceElement;@6ee12bac
+No operations allowed after connection closed.
+Line: 246
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T08:30:13.806511400
+[Ljava.lang.StackTraceElement;@6ee12bac
+No operations allowed after connection closed.
+Line: 246
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T08:49:48.899799100
+For input string: "Accepted as a Lightning Talk"
+Line: 202
+Class: com.csm.dao.Paper
+

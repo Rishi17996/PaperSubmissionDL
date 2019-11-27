@@ -19,14 +19,14 @@ public class Main {
 		System.out.println("affiliation saved: " + affSaved);
 
 		// hash password
-		String userPassword = "password";
-    String securePassword = Utilities.getSHA1Password(userPassword);
+// 		String userPassword = "password";
+//       String securePassword = Utilities.getSHA1Password(userPassword);
 
 		// new user generates next available id
 		User user = new PaperAuthor("LastName",
 				"FirstName",
 				"asdf@asdf.com",
-				securePassword,
+				"password",
 				"20250101000000",
 				0,
 				affiliationId,
@@ -76,5 +76,7 @@ public class Main {
       // get papers for user 558
       System.out.println("getPapers: ");
       paper.getPapers(558);
+      
+      user.login("asdf@asdf.com", "password");
 	}
 }
