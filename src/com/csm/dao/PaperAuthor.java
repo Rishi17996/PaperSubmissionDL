@@ -246,7 +246,7 @@ public class PaperAuthor extends User {
 			this.fetch(_email);
          
          tempList = new ArrayList<ArrayList<String>>();
-         String query = "SELECT SHA1(?) FROM Users";
+         String query = "SELECT SHA1(?) FROM Users LIMIT 1";
          ArrayList<String> params = new ArrayList<String>();
          params.add(password);
          db.connect();
