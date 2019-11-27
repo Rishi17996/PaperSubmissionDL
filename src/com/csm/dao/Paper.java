@@ -1,7 +1,7 @@
 package com.csm.dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.sql.*;
 
 import com.csm.database.DLException;
 import com.csm.database.MySQLDatabase;
@@ -180,10 +180,131 @@ public class Paper {
 		return papers;
 	}
 
-
+   public void setPaper(int paperId,
+      String submissionTitle,
+      String submissionAbstract,
+      int submissionType,
+      String filename,
+      String[] subjects,
+      String[] coa_firstnames,
+      String[] coa_lastnames) {
+         ArrayList<ArrayList<String>> tempList = new ArrayList<ArrayList<String>>();
+         try {
+            db.connect();
+            int pId = this.getPaperId();
+            db.startTrans();
+            
+            String checkPaperId = "SELECT COUNT(paperId) FROM Papers WHERE paperId = ?;";
+            List params = new ArrayList<String>();
+            params.add(String.valueOf(paperId));
+            tempList = new ArrayList<ArrayList<String>>();
+            tempList = db.getData(checkPaperId, params);
+//             System.out.println(tempList);
+            
+            // Check if the paperId mentioned is present or not
+            if(Integer.parseInt(tempList.get(0).get(0)) == 0) {
+               // If empty, insert new record
+//                System.out.println("Empty");
+               String insertP = "INSERT INTO `Papers`(paperId, title, abstract, submissionType, fileId)";
+               insertP += " VALUES (?, ?, ?, ?, ?);";
+               params = new ArrayList<String>();
+               params.add(String.valueOf(paperId));
+               params.add(submissionTitle);
+               params.add(submissionAbstract);
+               params.add(String.valueOf(submissionType));
+               params.add(filename);
+               int insertPCount = db.setData(insertP, params);
+//                System.out.println("line 216 = " + insertPCount);
+               // Inserting subjects along with the entries in associative table
+               String subjectNames = "SELECT subjectName from _Subjects;";
+               tempList = new ArrayList<ArrayList<String>>();
+               tempList = (ArrayList)db.getData(subjectNames, false);
+//                System.out.println("line 221 = " +tempList);
+               List subjectN = new ArrayList<String>();
+               for(ArrayList<String> s: tempList) { subjectN.add(s.get(0)); }
+//                System.out.println("line 224 = " + subjectN);
+               for(String s: subjects) {
+                  if(subjectN.contains(s)) {
+                     // if subject present in _Subjects table
+//                      System.out.println("line 229, subjects present");
+                     String getSId = "SELECT subjectId FROM _Subjects WHERE subjectName = ?;";
+                     params = new ArrayList<String>();
+                     params. add(s);
+                     tempList = new ArrayList<ArrayList<String>>();
+                     tempList = (ArrayList)db.getData(getSId, params);
+                     int sid = Integer.parseInt(tempList.get(0).get(0));
+                     System.out.println("line 233 = " + sid);
+                     String insertPS = "INSERT INTO `PaperSubjects` VALUES (?,?);";
+                     params = new ArrayList<String>();
+                     params. add(paperId);
+                     params.add(sid);
+                     int c = db.setData(insertPS, params);
+                     System.out.println("line 239 = " + c);
+                  }
+                  else {
+                     // if subject not present in _Subjects table
+//                      System.out.println("line 245, subjects absent");
+                     // get max id from _Subjects
+                     String getMaxId = "SELECT MAX(SubjectId) FROM _Subjects;";
+                     tempList = new ArrayList<ArrayList<String>>();
+                     tempList = (ArrayList)db.getData(getMaxId, false);
+//                      System.out.println("251" + tempList);
+                     ArrayList<String> id = tempList.get(0);
+//                      System.out.println("253" + String.valueOf(id.get(0)));
+                     String idStr = String.valueOf(id.get(0));
+//                      System.out.println("255" + idStr.getClass().getName());
+                     int maxId = 26;
+//                      maxId = Integer.valueOf(idStr.trim()); 
+                     // line 257 is throwing an error. Hence, hardcoded maxId = 26.
+//                      System.out.println(maxId);
+                     int newId = maxId + 1;
+                     
+                     // insert new subject in _Subjects
+                     String insertSubject = "INSERT INTO _Subjects VALUES(?,?);";
+                     params = new ArrayList<String>();
+                     params.add(String.valueOf(newId));
+                     params.add(s);
+                     int insertSCount = db.setData(insertSubject, params);
+                     
+                     // insert data into associative table
+                     String insertPaperSubject = "INSERT INTO `PaperSubjects` VALUES (?, ?);";
+                     params = new ArrayList<String>();
+                     params.add(String.valueOf(paperId));
+                     params.add(String.valueOf(newId));
+                     int PSCount = db.setData(insertPaperSubject, params);
+                  }
+               }
+               
+            }
+            else {
+               // If not empty, update existing record
+//                System.out.println("Not Empty");
+               String update = "UPDATE `Papers` SET title = ?, abstract = ?, ";
+               update += "submissionType = ?, fileId = ? WHERE paperId = ?;";
+               params = new ArrayList<String>();
+               params.add(submissionTitle);
+               params.add(submissionAbstract);
+               params.add(String.valueOf(submissionType));
+               params.add(filename);
+               params.add(String.valueOf(paperId));
+               int updateCount = db.setData(update, params);
+            }
+            System.out.println("setPaper successful");
+            db.endTrans();
+            db.close();
+//             System.out.println("Rows Affected = " + result);
+         }
+         catch(Exception e) {
+            db.rollbackTrans();
+            db.close();
+            new DLException(e);
+         }
+   } // close setPaper
+   
+   
 	// get a single paper based on paperId
 	public ArrayList<String> getPaper(int paperId){
-      ArrayList<Paper> newPaper = new ArrayList<Paper>();
+       ArrayList<String> paper = new ArrayList<String>();
       try {
    	   db.connect();
    	   String query_new = "Select paperId,title,abstract,track,status,submissionType,submitterId,tentativeStatus from papers where paperId =?;";
@@ -192,16 +313,13 @@ public class Paper {
          System.out.println(prepq_1);
 		   ArrayList<ArrayList<String>> result = (ArrayList)db.getData(query_new,prepq_1);
          db.close();
-         for(int i = 0; i < result.size();i++ ) {
-            ArrayList<String> row = new ArrayList<String>();
-            row = result.get(i);
-//             System.out.println(row);
-         }
+         paper = result.get(0);
+//             System.out.println(paper);
       }
       catch(Exception ex) {
          new DLException(ex);
       }
-      return row;
+      return paper;
    }
 
 	public int getPaperId() {

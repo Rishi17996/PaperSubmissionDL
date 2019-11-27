@@ -1,45 +1,29 @@
 
 
-2019-11-25T20:03:54.631142300
-[Ljava.lang.StackTraceElement;@63daf2e1
-The driver was unable to create a connection due to an inability to establish the client portion of a socket.
 
-This is usually caused by a limit on the number of sockets imposed by the operating system. This limit is usually configurable. 
-
-For Unix-based platforms, see the manual page for the 'ulimit' command. Kernel or system reconfiguration may also be required.
-
-For Windows-based platforms, see Microsoft Knowledge Base Article 196271 (Q196271).
-Line: 168
+2019-11-27T16:48:17.522314
+java.base/java.lang.Integer cannot be cast to java.base/java.lang.String
+Line: 267
 Class: com.csm.dao.Paper
 
 
 
-2019-11-25T20:03:54.662442700
-[Ljava.lang.StackTraceElement;@19ed6130
-No operations allowed after connection closed.
-Line: 168
+2019-11-27T16:49:49.875981400
+java.base/java.lang.Integer cannot be cast to java.base/java.lang.String
+Line: 267
 Class: com.csm.dao.Paper
 
 
 
-2019-11-27T08:28:43.882532700
-[Ljava.lang.StackTraceElement;@6ee12bac
-No operations allowed after connection closed.
-Line: 246
-Class: com.csm.dao.PaperAuthor
+2019-11-27T16:52:03.419472900
+java.base/java.lang.Integer cannot be cast to java.base/java.lang.String
+Line: 266
+Class: com.csm.dao.Paper
 
 
 
-2019-11-27T08:30:13.806511400
-[Ljava.lang.StackTraceElement;@6ee12bac
-No operations allowed after connection closed.
-Line: 246
-Class: com.csm.dao.PaperAuthor
-
-
-
-2019-11-27T08:49:48.899799100
-For input string: "Accepted as a Lightning Talk"
-Line: 202
+2019-11-27T16:53:25.754404900
+java.base/java.lang.Integer cannot be cast to java.base/java.lang.String
+Line: 266
 Class: com.csm.dao.Paper
 

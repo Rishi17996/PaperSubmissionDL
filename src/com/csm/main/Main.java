@@ -78,5 +78,25 @@ public class Main {
       paper.getPapers(558);
       
       user.login("asdf@asdf.com", "password");
+      
+      System.out.println("setPaper: ");
+      int existingPaperId = 123;
+      int newPaperId = 200;
+      String title = "Test title";
+      String submissionAbstract = "Test abstract";
+      int submissionType = 2;
+      String fileName = "Test fileName";
+      String[] subjects = {"Test Subject 1"};
+      String[] coauthors_fn = {"Test_1_fn1", "Test_2_fn2"};
+      String[] coauthors_ln = {"Test_1_ln1", "Test_2_ln2"};
+      
+      paper.setPaper(newPaperId,
+         title,
+         submissionAbstract,
+         submissionType,
+         fileName,
+         subjects,
+         coauthors_fn,
+         coauthors_ln);
 	}
 }

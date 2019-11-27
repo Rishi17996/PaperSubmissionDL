@@ -254,21 +254,21 @@ public class PaperAuthor extends User {
          db.close();
           
          String hashedPswd = tempList.get(0).get(0);
-			System.out.println("pswd = " + pswd);
-         System.out.println("hp = " + hashedPswd);
+// 			System.out.println("pswd = " + pswd);
+//          System.out.println("hp = " + hashedPswd);
          if(pswd.equals(hashedPswd)) {
 			   int token = this.isAdmin;
 			   if(token == 1) {
-               System.out.println("LA");
+               System.out.println("Login Successful and User is Admin.");
 			   	returnValue = 1;
 			   }
 			   else {
-               System.out.println("LU");
+               System.out.println("Login Successful and User is not an Admin.");
 			   	returnValue = 0;
 			   }
 			}
 			else {
-            System.out.println("U");
+            System.out.println("Login unsuccessful");
 			  	returnValue = -1;
 			}
 		}

@@ -117,74 +117,74 @@ public class MySQLDatabase {
 	 * @param columns
 	 * @return objectlist
 	 */
-	// public ArrayList<ArrayList<Object>> getData(String sqlString, boolean columns) {
-// 
-// 		Statement stmnt = null;
-// 		ResultSet rs = null;
-// 		ArrayList<Object> tempList;
-// 		ArrayList<ArrayList<Object>> objectList = new ArrayList<ArrayList<Object>>();
-// 
-// 		try {
-// 			// create statement
-// 			stmnt = conn.createStatement();
-// 		} catch (SQLException e) {
-// 			try {
-// 				// throw dlexception and pass error info
-// 				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
-// 				throw new DLException(e, errorInfo);
-// 			} catch (DLException e1) {
-// 				System.out.println("There was an error completing an operation.");
-// 			}
-// 		}
-// 
-// 		try {
-// 			// execute query
-// 			rs = stmnt.executeQuery(sqlString);
-// 
-// 			while (rs.next()) {
-// 				tempList = new ArrayList<Object>();
-// 				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-// 					if (rs.getMetaData().getColumnTypeName(i) == "INT") {
-// 						tempList.add(rs.getInt(i));
-// 					} else {
-// 						tempList.add(rs.getString(i));
-// 					}
-// 				}
-// 				objectList.add(tempList);
-// 			}
-// 		} catch (SQLException e) {
-// 			try {
-// 				// throw dlexception and pass error info
-// 				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
-// 				throw new DLException(e, errorInfo);
-// 			} catch (DLException e1) {
-// 				System.out.println("There was an error completing an operation.");
-// 			}
-// 		}
-// 
-// 		if (columns) {
-// 			try {
-// 				// get result set metadata and
-// 				// print out table data
-// 				ResultSetMetaData rsmd = rs.getMetaData();
-// 				System.out.printf("%n%-10s%-17s%-24s%-10s", rsmd.getColumnName(1), rsmd.getColumnName(2),
-// 						rsmd.getColumnName(3), rsmd.getColumnName(4));
-// 
-// 				System.out.printf("%n%-10s%-17s%-24s%-10s", rsmd.getColumnDisplaySize(1), rsmd.getColumnDisplaySize(2),
-// 						rsmd.getColumnDisplaySize(3), rsmd.getColumnDisplaySize(4));
-// 
-// 			} catch (SQLException e) {
-// 				try {
-// 					// throw dlexception and pass error info
-// 					String[] errorInfo = { String.valueOf(e.getStackTrace()) };
-// 					throw new DLException(e, errorInfo);
-// 				} catch (DLException e1) {
-// 					System.out.println("There was an error completing an operation.");
-// 				}
-// 			}
-// 		}
-// 		return objectList;
-// 	}
+	public ArrayList<ArrayList<Object>> getData(String sqlString, boolean columns) {
+
+		Statement stmnt = null;
+		ResultSet rs = null;
+		ArrayList<Object> tempList;
+		ArrayList<ArrayList<Object>> objectList = new ArrayList<ArrayList<Object>>();
+
+		try {
+			// create statement
+			stmnt = conn.createStatement();
+		} catch (SQLException e) {
+			try {
+				// throw dlexception and pass error info
+				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
+				throw new DLException(e, errorInfo);
+			} catch (DLException e1) {
+				System.out.println("There was an error completing an operation.");
+			}
+		}
+
+		try {
+			// execute query
+			rs = stmnt.executeQuery(sqlString);
+
+			while (rs.next()) {
+				tempList = new ArrayList<Object>();
+				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+					if (rs.getMetaData().getColumnTypeName(i) == "INT") {
+						tempList.add(rs.getInt(i));
+					} else {
+						tempList.add(rs.getString(i));
+					}
+				}
+				objectList.add(tempList);
+			}
+		} catch (SQLException e) {
+			try {
+				// throw dlexception and pass error info
+				String[] errorInfo = { String.valueOf(e.getStackTrace()) };
+				throw new DLException(e, errorInfo);
+			} catch (DLException e1) {
+				System.out.println("There was an error completing an operation.");
+			}
+		}
+
+		if (columns) {
+			try {
+				// get result set metadata and
+				// print out table data
+				ResultSetMetaData rsmd = rs.getMetaData();
+				System.out.printf("%n%-10s%-17s%-24s%-10s", rsmd.getColumnName(1), rsmd.getColumnName(2),
+						rsmd.getColumnName(3), rsmd.getColumnName(4));
+
+				System.out.printf("%n%-10s%-17s%-24s%-10s", rsmd.getColumnDisplaySize(1), rsmd.getColumnDisplaySize(2),
+						rsmd.getColumnDisplaySize(3), rsmd.getColumnDisplaySize(4));
+
+			} catch (SQLException e) {
+				try {
+					// throw dlexception and pass error info
+					String[] errorInfo = { String.valueOf(e.getStackTrace()) };
+					throw new DLException(e, errorInfo);
+				} catch (DLException e1) {
+					System.out.println("There was an error completing an operation.");
+				}
+			}
+		}
+		return objectList;
+	}
 
 	private PreparedStatement prepare(String sqlString, List<String> stringList) {
 		PreparedStatement preparedStmt = null;
