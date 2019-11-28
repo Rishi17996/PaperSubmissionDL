@@ -36,9 +36,6 @@ public class MySQLDatabase {
          catch(Exception ex) {
             new DLException(ex);
          }
-//          catch (DLException e1) {
-// 				System.out.println("There was an error completing an operation.");
-// 			}
 		}
 	}
 
@@ -244,7 +241,6 @@ public class MySQLDatabase {
 		} catch (SQLException e) {
          System.out.println("ABC123");
 		}
-//System.out.println(objectList);
 		// return 2d array list
 		return objectList;
 	}
@@ -293,19 +289,6 @@ public class MySQLDatabase {
          return false;
       }
    }
-	
-/*
-
-   Vivek Panchal Commented this
-*/
-
-	/**
-	 * prepare statement
-	 *
-	 * @param sqlString
-	 * @param stringList
-	 * @return preparedStmt
-	 */
 
 
 	/**

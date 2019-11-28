@@ -17,7 +17,7 @@ public abstract class User {
    // token = -1 --> unsuccessful login
    // token = 0 --> login success + normal user
    // token = 1 --> login success + admin
-   private int token; 
+   public int token; 
 
 	// empty constructor
 	public User() {

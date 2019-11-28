@@ -27,3 +27,116 @@ java.base/java.lang.Integer cannot be cast to java.base/java.lang.String
 Line: 266
 Class: com.csm.dao.Paper
 
+
+
+2019-11-27T20:37:06.193824200
+535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials n21sm8988754qtn.33 - gsmtp
+
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T20:38:46.311327700
+535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials r4sm7681292qkd.9 - gsmtp
+
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T20:42:42.354473800
+535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials g188sm7809555qkf.105 - gsmtp
+
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T20:49:37.315049600
+535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials g9sm3097433qtv.14 - gsmtp
+
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T20:52:44.369018100
+535-5.7.8 Username and Password not accepted. Learn more at
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials g9sm3101306qtv.14 - gsmtp
+
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T20:58:05.148284400
+Couldn't connect to host, port: smtp.gmail.com, 586; timeout -1
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T21:05:58.080225900
+Couldn't connect to host, port: smtp.gmail.com, 586; timeout -1
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T21:07:37.598818
+Couldn't connect to host, port: smtp.gmail.com, 586; timeout -1
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T21:15:34.124838
+Couldn't connect to host, port: smtp.gmail.com, 586; timeout -1
+Line: 338
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T22:31:53.955200100
+[Ljava.lang.StackTraceElement;@2d2e5f00
+Duplicate entry '6' for key 'PRIMARY'
+Line: 139
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T22:37:04.299103300
+[Ljava.lang.StackTraceElement;@2d2e5f00
+Duplicate entry '6' for key 'PRIMARY'
+Line: 139
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T22:42:07.567502400
+[Ljava.lang.StackTraceElement;@2d2e5f00
+Duplicate entry '6' for key 'PRIMARY'
+Line: 139
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T23:05:19.627060600
+[Ljava.lang.StackTraceElement;@2d2e5f00
+Duplicate entry '6' for key 'PRIMARY'
+Line: 138
+Class: com.csm.dao.PaperAuthor
+
+
+
+2019-11-27T23:07:55.411339400
+[Ljava.lang.StackTraceElement;@2d2e5f00
+Duplicate entry '6' for key 'PRIMARY'
+Line: 138
+Class: com.csm.dao.PaperAuthor
+

@@ -1,15 +1,20 @@
 package com.csm.main;
 
+import java.util.*;
+
 import com.csm.dao.Affiliation;
 import com.csm.dao.Paper;
 import com.csm.dao.PaperAuthor;
 import com.csm.dao.User;
 import com.csm.utility.Utilities;
+import com.csm.dao.Configuration;
 
 public class Main {
 
 	public static void main (String[] args) {
-
+      
+      // This main method is just to test how things go behind the scenes.
+      
 		// create new affiliation for user
 		Affiliation affiliation = new Affiliation("School of Visual Arts");
 
@@ -23,9 +28,9 @@ public class Main {
 //       String securePassword = Utilities.getSHA1Password(userPassword);
 
 		// new user generates next available id
-		User user = new PaperAuthor("LastName",
-				"FirstName",
-				"asdf@asdf.com",
+		User user = new PaperAuthor("Stark",
+				"Tony",
+				"warishi179@gmail.com",
 				"password",
 				"20250101000000",
 				0,
@@ -60,7 +65,7 @@ public class Main {
 
 		// create partial user profile
 		User profileUser = new PaperAuthor();
-		profileUser.setProfile("Werner", "Edward", "asdf@asdf.com", secureProfilePassword, 273);
+		profileUser.setProfile("Steve", "Steve", "warishi179@gmail.com", secureProfilePassword, 273);
 		int profileSaved = profileUser.post();
 		System.out.println("profile saved: " + profileSaved);
 
@@ -71,7 +76,10 @@ public class Main {
 
       // get paper with paperId = 21
       System.out.println("getPaper: ");
-      paper.getPaper(21);
+      ArrayList<String> paperInfo = paper.getPaper(21);
+      for(String s: paperInfo) {
+         System.out.println(s);
+      }
 
       // get papers for user 558
       System.out.println("getPapers: ");
@@ -90,13 +98,18 @@ public class Main {
       String[] coauthors_fn = {"Test_1_fn1", "Test_2_fn2"};
       String[] coauthors_ln = {"Test_1_ln1", "Test_2_ln2"};
       
-      paper.setPaper(newPaperId,
-         title,
-         submissionAbstract,
-         submissionType,
-         fileName,
-         subjects,
-         coauthors_fn,
-         coauthors_ln);
+      if (user.token >= 0) {
+         paper.setPaper(newPaperId,
+            title,
+            submissionAbstract,
+            submissionType,
+            fileName,
+            subjects,
+            coauthors_fn,
+            coauthors_ln);
+      }
+      System.out.println("reset Password: ");
+      user.resetPassword("your_email_here_@gmail.com");
+      
 	}
 }

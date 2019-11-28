@@ -1,9 +1,10 @@
 package com.csm.utility;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
+
+import com.csm.database.DLException;
 
 public class Utilities {
 
@@ -39,8 +40,9 @@ public class Utilities {
 				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
 			}
 			generatedPassword = sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+		} 
+      catch (Exception e) {
+		   new DLException(e);   
 		}
 		return generatedPassword;
 	}

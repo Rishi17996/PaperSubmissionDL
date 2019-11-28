@@ -79,9 +79,11 @@ public class Paper {
 	}
 
 	/**
-	 * Post new paper to database
-	 *
-	 * @return int
+    * Method:       post 
+	 * Description : Post new paper to database
+	 *               <BR>
+    * @param        int subjectId
+	 * @return       int
 	 */
 	public int post(int subjectId) {
 
@@ -148,7 +150,13 @@ public class Paper {
 	}
 
 
-	// get a list of papers baser on userId
+	/**
+    * Method:       getPapers
+	 * Description : returns all papers for specified userId
+	 *               <BR>
+    * @param        int userId
+	 * @return       ArrayList<Paper>
+	 */
 	public ArrayList<Paper> getPapers(int userId) {
 		ArrayList<Paper> papers = new ArrayList<Paper>();
     try{
@@ -179,7 +187,16 @@ public class Paper {
       }
 		return papers;
 	}
-
+   
+   
+   /**
+    * Method:       setPaper
+	 * Description : Sets details according the provided information if paperId is not
+    *               present then creates new entry and updates all the specified information 
+	 *               <BR>
+    * @param        int paperId,String submissionTitle, String submissionAbstract,int submissionType, String filename,
+    *               String[] subjects,String[] coa_firstnames,String[] coa_lastnames
+	 */
    public void setPaper(int paperId,
       String submissionTitle,
       String submissionAbstract,
@@ -302,7 +319,13 @@ public class Paper {
    } // close setPaper
    
    
-	// get a single paper based on paperId
+	/**
+    * Method:       getPaper
+	 * Description : returns all info except filename for specified paperId
+	 *               <BR>
+    * @param        int paperId
+	 * @return       ArrayList<String>
+	 */
 	public ArrayList<String> getPaper(int paperId){
        ArrayList<String> paper = new ArrayList<String>();
       try {
@@ -321,7 +344,10 @@ public class Paper {
       }
       return paper;
    }
-
+   
+   
+   // Accessors and Mutators
+   
 	public int getPaperId() {
 		return paperId;
 	}
